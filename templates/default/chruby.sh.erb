@@ -1,0 +1,3 @@
+source /usr/local/chruby-<%= @version %>/share/chruby/chruby.sh
+chruby <%= @default %>
+<%= @switch && "source /usr/local/chruby-#{@version}/share/chruby/auto.sh" %>

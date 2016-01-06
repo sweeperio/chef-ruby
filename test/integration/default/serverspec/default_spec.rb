@@ -19,4 +19,34 @@ describe "ruby" do
       end
     end
   end
+
+  context "chruby" do
+    CHRUBY_FILES = {
+      profile: "/etc/profile.d/chruby.sh",
+      chruby: "/usr/local/chruby-0.3.9/share/chruby/chruby.sh",
+      auto: "/usr/local/chruby-0.3.9/share/chruby/auto.sh"
+    }.freeze
+
+    CHRUBY_FILES.each do |_, file|
+      describe file(file) do
+        it { should exist }
+        it { should be_file }
+      end
+    end
+
+    describe file(CHRUBY_FILES[:profile]) do
+      it { should exist }
+      it { should be_mode("644") }
+
+      its(:content) { should contain("source #{CHRUBY_FILES[:chruby]}") }
+      its(:content) { should contain("source #{CHRUBY_FILES[:auto]}") }
+    end
+
+    describe command("source /etc/profile && chruby") do
+      let(:shell) { "/bin/bash" }
+
+      its(:exit_status) { should eq(0) }
+      its(:stdout) { should match(/2\.2\.2\n\s*\*\s*2\.2\.3/) }
+    end
+  end
 end
