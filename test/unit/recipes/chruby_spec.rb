@@ -24,11 +24,11 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-describe "ruby::chruby" do
+describe "swpr_ruby::chruby" do
   cached(:chef_run) do
     runner = ChefSpec::SoloRunner.new do |node|
-      node.set["ruby"]["chruby"]["auto_switch"] = true
-      node.set["ruby"]["chruby"]["version"]     = "0.3.9"
+      node.set["swpr_ruby"]["chruby"]["auto_switch"] = true
+      node.set["swpr_ruby"]["chruby"]["version"]     = "0.3.9"
     end
 
     runner.converge(described_recipe)
@@ -39,7 +39,7 @@ describe "ruby::chruby" do
   end
 
   it "arks chruby and installs with make" do
-    version = chef_run.node.attr!("ruby", "chruby", "version")
+    version = chef_run.node.attr!("swpr_ruby", "chruby", "version")
 
     expect(chef_run).to install_with_make_ark("chruby").with(
       url: "https://github.com/postmodern/chruby/archive/v#{version}.tar.gz",
@@ -52,9 +52,9 @@ describe "ruby::chruby" do
   end
 
   it "generates the init script in /etc/profile.d" do
-    version        = chef_run.node.attr!("ruby", "chruby", "version")
-    system_version = chef_run.node.attr!("ruby", "system_version")
-    auto_switch    = chef_run.node.attr!("ruby", "chruby", "auto_switch")
+    version        = chef_run.node.attr!("swpr_ruby", "chruby", "version")
+    system_version = chef_run.node.attr!("swpr_ruby", "system_version")
+    auto_switch    = chef_run.node.attr!("swpr_ruby", "chruby", "auto_switch")
 
     expect(chef_run).to create_template("/etc/profile.d/chruby.sh").with(
       mode: 00644,

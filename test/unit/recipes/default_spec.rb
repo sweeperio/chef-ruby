@@ -24,21 +24,21 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-describe "ruby::default" do
+describe "swpr_ruby::default" do
   def each_version
-    chef_run.node.attr!("ruby", "versions").each do |version|
+    chef_run.node.attr!("swpr_ruby", "versions").each do |version|
       yield(version)
     end
   end
 
   def configure_node(node)
-    node.set["ruby"]["sources"] = {
+    node.set["swpr_ruby"]["sources"] = {
       "2.2.2" => "http://server.com/ruby-2.2.2.tar.bz2",
       "2.2.3" => "http://server.com/ruby-2.2.3.tar.bz2"
     }
 
-    node.set["ruby"]["versions"]       = %w(2.2.2 2.2.3)
-    node.set["ruby"]["system_version"] = "2.2.3"
+    node.set["swpr_ruby"]["versions"]       = %w(2.2.2 2.2.3)
+    node.set["swpr_ruby"]["system_version"] = "2.2.3"
   end
 
   cached(:chef_run) do
@@ -51,7 +51,7 @@ describe "ruby::default" do
   end
 
   it "installs apt packages" do
-    chef_run.node.attr!("ruby", "packages").each do |package|
+    chef_run.node.attr!("swpr_ruby", "packages").each do |package|
       expect(chef_run).to install_package(package)
     end
   end
@@ -59,14 +59,14 @@ describe "ruby::default" do
   it "installs all the rubies" do
     each_version do |version|
       expect(chef_run).to install_ruby_version(version).with(
-        symlink: version == chef_run.node.attr!("ruby", "system_version")
+        symlink: version == chef_run.node.attr!("swpr_ruby", "system_version")
       )
     end
   end
 
   context "when stepping into the resource" do
     cached(:chef_run) do
-      runner = ChefSpec::SoloRunner.new(step_into: %w(ruby_version)) do |node|
+      runner = ChefSpec::SoloRunner.new(step_into: %w(swpr_ruby_version)) do |node|
         configure_node(node)
       end
 
@@ -74,7 +74,7 @@ describe "ruby::default" do
     end
 
     it "ensures install dir exists" do
-      expect(chef_run).to create_directory(chef_run.node["ruby"]["install_dir"]).with(recursive: true)
+      expect(chef_run).to create_directory(chef_run.node["swpr_ruby"]["install_dir"]).with(recursive: true)
     end
 
     it "installs each version of ruby" do
@@ -84,7 +84,7 @@ describe "ruby::default" do
           name: version,
           version: version,
           path: "/opt/rubies",
-          url: chef_run.node["ruby"]["sources"][version]
+          url: chef_run.node["swpr_ruby"]["sources"][version]
         )
       end
     end

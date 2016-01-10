@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: ruby
+# Cookbook Name:: swpr_ruby
 # Recipe:: chruby
 #
 # The MIT License (MIT)
@@ -24,9 +24,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-version        = node.attr!("ruby", "chruby", "version")
-auto_switch    = node.attr!("ruby", "chruby", "auto_switch")
-system_version = node.attr!("ruby", "system_version")
+version        = node.attr!("swpr_ruby", "chruby", "version")
+auto_switch    = node.attr!("swpr_ruby", "chruby", "auto_switch")
+system_version = node.attr!("swpr_ruby", "system_version")
 
 template_vars = {
   default: system_version,

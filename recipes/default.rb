@@ -26,15 +26,15 @@
 
 include_recipe "apt"
 
-node.attr!("ruby", "packages").each { |pkg| package(pkg) }
+node.attr!("swpr_ruby", "packages").each { |pkg| package(pkg) }
 
-versions       = node.attr!("ruby", "versions")
-system_version = node.attr!("ruby", "system_version")
+versions       = node.attr!("swpr_ruby", "versions")
+system_version = node.attr!("swpr_ruby", "system_version")
 
 unless system_version.empty?
   Chef::Application.fatal!("system_version must be installed") unless versions.include?(system_version)
 end
 
 versions.each do |version|
-  ruby_version(version) { symlink version == system_version }
+  swpr_ruby_version(version) { symlink version == system_version }
 end

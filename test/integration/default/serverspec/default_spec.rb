@@ -1,6 +1,6 @@
 require "spec_helper"
 
-describe "ruby" do
+describe "swpr_ruby" do
   describe file("/opt/rubies/2.2.3/bin/ruby") do
     it { should exist }
     it { should be_file }

@@ -24,9 +24,9 @@ action :install do
 end
 
 def install_dir
-  node.attr!("ruby", "install_dir")
+  node.attr!("swpr_ruby", "install_dir")
 end
 
 def tar_file
-  node.attr!("ruby", "sources", version)
+  node.attr!("swpr_ruby", "sources", version)
 end

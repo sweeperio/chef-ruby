@@ -1,6 +1,6 @@
-# ruby
+# swpr_ruby
 
-[![Build Status](https://travis-ci.org/sweeperio/chef-ruby.svg?branch=master)](https://travis-ci.org/sweeperio/chef-ruby)
+[![Build Status](https://travis-ci.org/sweeperio/chef-swpr_ruby.svg?branch=master)](https://travis-ci.org/sweeperio/chef-swpr_ruby)
 
 Installs precompiled rubies for faster converges.
 
@@ -15,12 +15,12 @@ Installs precompiled rubies for faster converges.
 
 | attribute | description | default |
 |-----------|-------------|---------|
-| `node["ruby"]["install_dir"]` | where to install rubies | `/opt/rubies` |
-| `node["ruby"]["versions"]` | which rubies to install | `%w(2.2.3)` |
-| `node["ruby"]["sources"]` | hash of `version => compiled package url` | See _attributes/default.rb_ |
-| `node["ruby"]["system_version"]` | The version to be symlinked in `/usr/local/bin` | `2.2.3` |
-| `node["chruby"]["version"]` | the version of chruby to install | `0.3.9` |
-| `node["chruby"]["auto_switch"]` | whether or not to support [auto switching] | `true` |
+| `node["swpr_ruby"]["install_dir"]` | where to install rubies | `/opt/rubies` |
+| `node["swpr_ruby"]["versions"]` | which rubies to install | `%w(2.2.3)` |
+| `node["swpr_ruby"]["sources"]` | hash of `version => compiled package url` | See _attributes/default.rb_ |
+| `node["swpr_ruby"]["system_version"]` | The version to be symlinked in `/usr/local/bin` | `2.2.3` |
+| `node["swpr_ruby"]["chruby"]["version"]` | the version of chruby to install | `0.3.9` |
+| `node["swpr_ruby"]["chruby"]["auto_switch"]` | whether or not to support [auto switching] | `true` |
 
 [auto switching]: https://github.com/postmodern/chruby#auto-switching
 
@@ -28,29 +28,29 @@ Installs precompiled rubies for faster converges.
 
 ### ruby::default
 
-Installs all versions defined in `node["ruby"]["versions"]` and symlinks all the `bin/*` files in the version defined in
-`node["ruby"]["system_versions"]` as `/usr/local/bin/<executable>`.
+Installs all versions defined in `node["swpr_ruby"]["versions"]` and symlinks all the `bin/*` files in the version defined in
+`node["swpr_ruby"]["system_versions"]` as `/usr/local/bin/<executable>`.
 
 This recipe _**does not**_ include the `chruby` recipe since that is an optional addon we don't need/want on most
 machines.
 
-**Usage**: add `recipe[ruby]` to your run list
+**Usage**: add `recipe[swpr_ruby]` to your run list
 
 ### ruby::chruby
 
-Installs the version of chruby defined in `node["chruby"]["version"]` and optionally configures [auto switching] based
-on `node["chruby"]["auto_switch"]`.
+Installs the version of chruby defined in `node["swpr_chruby"]["version"]` and optionally configures [auto switching] based
+on `node["swpr_chruby"]["auto_switch"]`.
 
 This recipe also creates `/etc/profile.d/chruby.sh` which will be loaded by interactive shells by default. The system
 version will be set as the default.
 
-**Usage**: add `recipe[ruby::chruby]` to your run list
+**Usage**: add `recipe[swpr_ruby::chruby]` to your run list
 
 ## Resources
 
-### ruby_version
+### swpr_ruby_version
 
-Installs a precompiled version of ruby in `node["ruby"]["install_dir"]`.
+Installs a precompiled version of ruby in `node["swpr_ruby"]["install_dir"]`.
 
 #### Properties
 
@@ -63,9 +63,9 @@ Installs a precompiled version of ruby in `node["ruby"]["install_dir"]`.
 
 ```ruby
 # in a recipe or resource...
-ruby_version("2.1.8")
+swpr_ruby_version("2.1.8")
 
-ruby_version "2.2.3" do
+swpr_ruby_version "2.2.3" do
   symlink true
 end
 ```

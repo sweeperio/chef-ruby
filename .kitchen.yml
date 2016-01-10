@@ -13,10 +13,10 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[ruby]
-      - recipe[ruby::chruby]
+      - recipe[swpr_ruby]
+      - recipe[swpr_ruby::chruby]
     attributes:
-      ruby:
+      swpr_ruby:
         versions:
           - 2.2.2
           - 2.2.3

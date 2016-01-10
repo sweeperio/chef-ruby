@@ -1,5 +1,5 @@
 # rubocop:disable Style/SingleSpaceBeforeFirstArg
-name             "ruby"
+name             "swpr_ruby"
 maintainer       "sweeper.io"
 maintainer_email "developers@sweeper.io"
 license          "mit"
@@ -10,10 +10,10 @@ version          "0.1.0"
 
 supports "ubuntu"
 
-depends "apt",   "~> 2.0"
-depends "ark",   "~> 0.0"
-depends "core",  "~> 0.0"
+depends "apt",        "~> 2.0"
+depends "ark",        "~> 0.0"
+depends "swpr_core",  "~> 0.0"
 
 chef_version ">= 12.5" if respond_to?(:chef_version)
-source_url "https://github.com/sweeperio/chef-ruby" if respond_to?(:source_url)
-issues_url "https://github.com/sweeperio/chef-ruby/issues" if respond_to?(:issues_url)
+source_url "https://github.com/sweeperio/chef-swpr_ruby" if respond_to?(:source_url)
+issues_url "https://github.com/sweeperio/chef-swpr_ruby/issues" if respond_to?(:issues_url)
