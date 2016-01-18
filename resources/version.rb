@@ -6,11 +6,21 @@ property :symlink, [TrueClass, FalseClass], default: false
 action :install do
   directory(install_dir) { recursive true }
 
+  libs = ::File.join(install_dir, version, "lib", "libruby.so*")
+  bins = ::File.join(install_dir, version, "bin", "*")
+
+  execute "symlink shared libs #{version}" do
+    action :nothing
+    command "ln -s #{libs} ."
+    cwd "/usr/lib"
+  end
+
   execute "symlink ruby #{version}" do
     action :nothing
-    command "ln -s /opt/rubies/#{version}/bin/* ."
+    command "ln -s #{bins} ."
     cwd "/usr/local/bin"
     only_if { symlink }
+    notifies :run, "execute[symlink shared libs #{version}]", :immediately
   end
 
   ark "ruby-#{version}" do
