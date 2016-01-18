@@ -18,6 +18,13 @@ describe "swpr_ruby" do
         it { should be_linked_to "/opt/rubies/2.2.3/bin/#{exe}" }
       end
     end
+
+    %w(libruby.so libruby.so.2.2 libruby.so.2.2.0).each do |lib|
+      describe file("/usr/lib/#{lib}") do
+        it { should be_symlink }
+        it { should be_linked_to "/opt/rubies/2.2.3/lib/#{lib}" }
+      end
+    end
   end
 
   context "chruby" do

@@ -1,4 +1,3 @@
-# rubocop:disable Style/SingleSpaceBeforeFirstArg
 name             "swpr_ruby"
 maintainer       "sweeper.io"
 maintainer_email "developers@sweeper.io"
@@ -6,7 +5,6 @@ license          "mit"
 description      "Installs/Configures ruby"
 long_description IO.read(File.join(File.dirname(__FILE__), "README.md"))
 version          "0.1.0"
-# rubocop:enable Style/SingleSpaceBeforeFirstArg
 
 supports "ubuntu"
 

@@ -93,6 +93,9 @@ describe "swpr_ruby::default" do
       each_version do |version|
         resource = chef_run.find_resource(:ark, "ruby-#{version}")
         expect(resource).to notify("execute[symlink ruby #{version}]").to(:run).immediately
+
+        resource = chef_run.find_resource(:execute, "symlink ruby #{version}")
+        expect(resource).to notify("execute[symlink shared libs #{version}]").to(:run).immediately
       end
     end
   end
